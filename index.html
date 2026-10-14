@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#10182b">
+<title>JarVias AI — Content Studio</title>
+<style>
+:root{--bg:#0b1020;--panel:#131c31;--panel2:#1a2741;--text:#f5f7ff;--muted:#aab5ce;--accent:#8b9cff;--accent2:#72e0c2;--line:#2b3855}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at top,#1a2a50 0,#0b1020 55%);color:var(--text);font-family:system-ui,-apple-system,Segoe UI,sans-serif;min-height:100vh}
+.wrap{max-width:860px;margin:auto;padding:20px 15px 44px}.top{display:flex;align-items:center;gap:12px;margin:6px 0 26px}.logo{width:48px;height:48px;border-radius:15px;background:linear-gradient(135deg,#8b9cff,#72e0c2);color:#10182b;display:grid;place-items:center;font-weight:900;font-size:22px}.brand{font-size:21px;font-weight:800;letter-spacing:.2px}.sub{color:var(--muted);font-size:13px}.lang{margin-left:auto;background:var(--panel);color:var(--text);border:1px solid var(--line);padding:9px;border-radius:10px}
+.hero h1{font-size:clamp(27px,6vw,42px);line-height:1.12;margin:0 0 10px}.hero p{color:var(--muted);margin:0 0 22px;line-height:1.6}.tag{display:inline-block;color:#a9f5df;background:#173a3a;border:1px solid #245452;border-radius:99px;padding:5px 10px;font-size:12px;margin-bottom:12px}
+.card{background:rgba(19,28,49,.94);border:1px solid var(--line);border-radius:18px;padding:18px;margin:14px 0;box-shadow:0 14px 36px #0002}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.type{border:1px solid var(--line);background:var(--panel2);color:var(--text);border-radius:13px;padding:13px 12px;text-align:left;cursor:pointer;min-height:74px}.type strong{display:block;margin-bottom:4px}.type small{color:var(--muted)}.type.active{border-color:var(--accent);box-shadow:inset 0 0 0 1px var(--accent);background:#263357}
+label{display:block;font-weight:650;margin:16px 0 7px}input,textarea,select{width:100%;padding:12px 13px;border:1px solid var(--line);border-radius:12px;background:#0d1528;color:var(--text);font:inherit}textarea{min-height:100px;resize:vertical}.row{display:grid;grid-template-columns:1fr 1fr;gap:12px}.btn{width:100%;border:0;border-radius:12px;padding:14px 16px;margin-top:15px;font-weight:800;font-size:15px;background:linear-gradient(90deg,var(--accent),var(--accent2));color:#0b1020;cursor:pointer}.btn.secondary{background:var(--panel2);color:var(--text);border:1px solid var(--line);margin-top:9px}.result{white-space:pre-wrap;line-height:1.65;color:#f5f7ff;background:#0d1528;border:1px solid var(--line);border-radius:12px;padding:14px;min-height:100px}.note{font-size:12px;color:var(--muted);line-height:1.5}.footer{text-align:center;color:var(--muted);font-size:12px;margin-top:24px}
+@media(max-width:540px){.row{grid-template-columns:1fr}.grid{grid-template-columns:1fr 1fr}.card{padding:14px}.lang{max-width:130px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header class="top"><div class="logo">J</div><div><div class="brand">JarVias AI</div><div class="sub" id="subtitle">AI Content Studio for Facebook Creators</div></div>
+<select class="lang" id="uiLang" aria-label="Website language"><option value="en">English</option><option value="th">ไทย</option><option value="lo">ລາວ</option><option value="es">Español</option><option value="fr">Français</option></select></header>
+<section class="hero"><span class="tag" id="tag">VERSION 1 · FREE PROTOTYPE</span><h1 id="headline">Create your next Facebook post faster.</h1><p id="intro">Choose a content type, describe your idea, and generate a starter draft. This prototype works without an API key.</p></section>
+<section class="card"><label id="typeLabel">1. Choose a content type</label><div class="grid" id="types">
+<button class="type active" data-type="post"><strong id="tPost">✍️ Facebook post</strong><small id="sPost">Engaging page content</small></button>
+<button class="type" data-type="sales"><strong id="tSales">🛍️ Product promotion</strong><small id="sSales">Promote a product</small></button>
+<button class="type" data-type="quote"><strong id="tQuote">💡 Quote & reflection</strong><small id="sQuote">Inspiration and life lessons</small></button>
+<button class="type" data-type="reel"><strong id="tReel">🎬 Short-video script</strong><small id="sReel">Reels and Shorts ideas</small></button>
+</div>
+<label id="topicLabel" for="topic">2. What is your post about?</label><textarea id="topic" placeholder="Example: A small coffee shop introducing its new iced latte"></textarea>
+<div class="row"><div><label id="toneLabel" for="tone">Tone</label><select id="tone"><option value="friendly">Friendly</option><option value="professional">Professional</option><option value="emotional">Emotional</option><option value="fun">Fun and catchy</option></select></div><div><label id="outLabel" for="outLang">Output language</label><select id="outLang"><option value="English">English</option><option value="Thai">ไทย (Thai)</option><option value="Lao">ລາວ (Lao)</option><option value="Spanish">Español (Spanish)</option><option value="French">Français (French)</option><option value="Vietnamese">Tiếng Việt (Vietnamese)</option><option value="Indonesian">Bahasa Indonesia</option><option value="Portuguese">Português</option></select></div></div>
+<button class="btn" id="generate">Generate draft</button>
+<p class="note" id="disclaimer">Demo mode: this creates a template-based draft in your browser. It is not connected to OpenAI API yet.</p>
+</section>
+<section class="card"><label id="resultLabel">Your draft</label><div class="result" id="result" aria-live="polite">Your generated draft will appear here.</div><button class="btn secondary" id="copy">Copy text</button></section>
+<div class="footer">JarVias AI · Built as a free first prototype · No account or API key required</div>
+</div>
+<script>
+const $=id=>document.getElementById(id); let type='post';
+const translations={
+en:{subtitle:'AI Content Studio for Facebook Creators',tag:'VERSION 1 · FREE PROTOTYPE',headline:'Create your next Facebook post faster.',intro:'Choose a content type, describe your idea, and generate a starter draft. This prototype works without an API key.',typeLabel:'1. Choose a content type',topicLabel:'2. What is your post about?',placeholder:'Example: A small coffee shop introducing its new iced latte',toneLabel:'Tone',outLabel:'Output language',generate:'Generate draft',disclaimer:'Demo mode: this creates a template-based draft in your browser. It is not connected to OpenAI API yet.',resultLabel:'Your draft',copy:'Copy text',post:'✍️ Facebook post',sPost:'Engaging page content',sales:'🛍️ Product promotion',sSales:'Promote a product',quote:'💡 Quote & reflection',sQuote:'Inspiration and life lessons',reel:'🎬 Short-video script',sReel:'Reels and Shorts ideas',empty:'Please enter a topic first.',copied:'Copied!',friendly:'Friendly',professional:'Professional',emotional:'Emotional',fun:'Fun and catchy'},
+th:{subtitle:'เครื่องมือสร้างคอนเทนต์สำหรับคนทำเพจ Facebook',tag:'เวอร์ชัน 1 · ต้นแบบฟรี',headline:'สร้างโพสต์ Facebook ได้ง่ายขึ้น',intro:'เลือกประเภทคอนเทนต์ ใส่หัวข้อ แล้วสร้างร่างข้อความได้ทันที ต้นแบบนี้ยังไม่ต้องใช้ API Key',typeLabel:'1. เลือกประเภทคอนเทนต์',topicLabel:'2. โพสต์เกี่ยวกับอะไร?',placeholder:'ตัวอย่าง: ร้านกาแฟเล็ก ๆ เปิดตัวลาเต้เย็นเมนูใหม่',toneLabel:'โทนภาษา',outLabel:'ภาษาของข้อความ',generate:'สร้างร่างข้อความ',disclaimer:'โหมดทดลอง: สร้างข้อความจากแม่แบบในเบราว์เซอร์ ยังไม่ได้เชื่อมต่อ OpenAI API',resultLabel:'ข้อความของคุณ',copy:'คัดลอกข้อความ',post:'✍️ โพสต์ Facebook',sPost:'เนื้อหาสำหรับเพจ',sales:'🛍️ โปรโมตสินค้า',sSales:'ข้อความขายสินค้า',quote:'💡 คำคมและข้อคิด',sQuote:'แรงบันดาลใจและข้อคิดชีวิต',reel:'🎬 สคริปต์คลิปสั้น',sReel:'ไอเดีย Reels และ Shorts',empty:'กรุณาใส่หัวข้อก่อนครับ',copied:'คัดลอกแล้ว!',friendly:'เป็นกันเอง',professional:'มืออาชีพ',emotional:'ซึ้งกินใจ',fun:'สนุกและสะดุดตา'},
+lo:{subtitle:'ເຄື່ອງມືສ້າງເນື້ອຫາສຳລັບຜູ້ເຮັດເພຈ Facebook',tag:'ເວີຊັນ 1 · ຕົ້ນແບບຟຣີ',headline:'ສ້າງໂພສ Facebook ໄດ້ງ່າຍຂຶ້ນ',intro:'ເລືອກປະເພດເນື້ອຫາ ໃສ່ຫົວຂໍ້ ແລ້ວສ້າງຮ່າງຂໍ້ຄວາມ. ຕົ້ນແບບນີ້ຍັງບໍ່ຕ້ອງໃຊ້ API Key',typeLabel:'1. ເລືອກປະເພດເນື້ອຫາ',topicLabel:'2. ໂພສກ່ຽວກັບຫຍັງ?',placeholder:'ຕົວຢ່າງ: ຮ້ານກາເຟເປີດຕົວເມນູລາເຕ້ເຢັນໃໝ່',toneLabel:'ຮູບແບບພາສາ',outLabel:'ພາສາຜົນລັບ',generate:'ສ້າງຮ່າງຂໍ້ຄວາມ',disclaimer:'ໂໝດທົດລອງ: ສ້າງຂໍ້ຄວາມຈາກແມ່ແບບໃນເບຣາວເຊີ ຍັງບໍ່ໄດ້ເຊື່ອມ OpenAI API',resultLabel:'ຮ່າງຂໍ້ຄວາມ',copy:'ສຳເນົາຂໍ້ຄວາມ',post:'✍️ ໂພສ Facebook',sPost:'ເນື້ອຫາສຳລັບເພຈ',sales:'🛍️ ໂຄສະນາສິນຄ້າ',sSales:'ຂໍ້ຄວາມຂາຍສິນຄ້າ',quote:'💡 ຄຳຄົມແລະຂໍ້ຄິດ',sQuote:'ກຳລັງໃຈແລະຂໍ້ຄິດຊີວິດ',reel:'🎬 ສະຄຣິບວິດີໂອສັ້ນ',sReel:'ໄອເດຍ Reels ແລະ Shorts',empty:'ກະລຸນາໃສ່ຫົວຂໍ້ກ່ອນ',copied:'ສຳເນົາແລ້ວ',friendly:'ເປັນກັນເອງ',professional:'ມືອາຊີບ',emotional:'ຊຶ້ງໃຈ',fun:'ມ່ວນແລະດຶງດູດ'}
+};
+const common={};
+function setLang(lang){let t=translations[lang]||translations.en; const keys=['subtitle','tag','headline','intro','typeLabel','topicLabel','toneLabel','outLabel','generate','disclaimer','resultLabel','copy','tPost','sPost','tSales','sSales','tQuote','sQuote','tReel','sReel']; const map={tPost:'post',sPost:'sPost',tSales:'sales',sSales:'sSales',tQuote:'quote',sQuote:'sQuote',tReel:'reel',sReel:'sReel'};keys.forEach(k=>{if($(k))$(k).textContent=t[map[k]||k]||translations.en[map[k]||k]||$(k).textContent});$('topic').placeholder=t.placeholder||translations.en.placeholder;let opts=$('tone').options;['friendly','professional','emotional','fun'].forEach((v,i)=>opts[i].textContent=t[v]||translations.en[v]);}
+$('uiLang').addEventListener('change',e=>setLang(e.target.value));
+document.querySelectorAll('.type').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('.type').forEach(x=>x.classList.remove('active'));b.classList.add('active');type=b.dataset.type;}));
+function generate(){let topic=$('topic').value.trim();let lang=$('outLang').value;let tone=$('tone').value;let ui=$('uiLang').value;let t=translations[ui]||translations.en;if(!topic){$('result').textContent=t.empty||translations.en.empty;$('topic').focus();return}
+let toneWord={friendly:'warm and friendly',professional:'clear and professional',emotional:'heartfelt and emotional',fun:'fun, catchy and energetic'}[tone];
+let output='';
+if(type==='post') output=`[${lang} Facebook post]\n\n${topic}\n\nHere is a thought worth sharing: small steps can create meaningful progress. Tell us what you think in the comments!\n\nWhat is your experience with this? Share below. 👇\n\n#FacebookContent #Community #DailyInspiration`;
+if(type==='sales') output=`[${lang} product promotion]\n\n✨ Discover something you'll love!\n\n${topic}\n\nWhy you'll love it:\n• Made with care\n• A simple choice for your everyday needs\n• Message us to learn more\n\n📩 Send us a message for details.\n\n#ShopNow #SpecialOffer #SmallBusiness`;
+if(type==='quote') output=`[${lang} quote & reflection]\n\n“Great things often begin with one small step.”\n\n${topic}\n\nToday's reflection: You do not have to have everything figured out. Keep learning, keep trying, and give yourself time to grow.\n\nWhat lesson has life taught you recently?\n\n#DailyReflection #LifeLessons #KeepGrowing`;
+if(type==='reel') output=`[${lang} short-video script · 20–30 seconds]\n\nHOOK (0–3s): Stop scrolling—here is something to think about.\n\nSCENE 1 (3–10s): Show a visual related to: ${topic}\n\nVOICEOVER (10–22s): Every journey begins somewhere. Focus on one small action you can take today, and build from there.\n\nENDING (22–30s): What do you think? Leave your answer in the comments.\n\nCAPTION: ${topic}\n\n#Reels #ShortVideo #Storytelling`;
+output += `\n\n[Style: ${toneWord}]\n\nNote: This is a starter template, not an AI-generated translation. Review and edit it before publishing.`;
+$('result').textContent=output;}
+$('generate').addEventListener('click',generate);
+$('copy').addEventListener('click',async()=>{let text=$('result').textContent;try{await navigator.clipboard.writeText(text);$('copy').textContent=(translations[$('uiLang').value]||translations.en).copied||'Copied!';setTimeout(()=>$('copy').textContent=(translations[$('uiLang').value]||translations.en).copy||'Copy text',1500)}catch(e){let r=document.createElement('textarea');r.value=text;document.body.appendChild(r);r.select();document.execCommand('copy');r.remove();}});
+setLang('en');
+</script>
+</body>
+</html>
